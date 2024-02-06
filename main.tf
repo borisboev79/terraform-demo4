@@ -5,6 +5,13 @@ terraform {
       version = "=3.89.0"
     }
   }
+  backend "azurerm" {
+    resource_group_name  = "StorageRG"
+    storage_account_name = "taskboardstoragebb"
+    container_name       = "taskboardcontainer"
+    key                  = "terraform.tfstate"
+
+  }
 }
 
 provider "azurerm" {
@@ -78,9 +85,6 @@ resource "azurerm_mssql_firewall_rule" "firewall" {
   start_ip_address = "0.0.0.0"
   end_ip_address   = "0.0.0.0"
 }
-
-
-
 
 resource "azurerm_app_service_source_control" "github" {
   app_id                 = azurerm_linux_web_app.alwa_bb.id
